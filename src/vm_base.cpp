@@ -1,4 +1,5 @@
 #include "lc3-vm.h"
+#include <cstdio>
 
 void setup_vm()
 {
@@ -16,12 +17,25 @@ bool read_image(char * path)
 
 uint16_t mem_read(uint16_t address)
 {
-    return 0;
+    // switch (address) {
+    //     case MR_KBSR: {
+    //         if (check_key()) {
+    //             memory_storage.at(MR_KBSR) = (1 << 15);
+    //             memory_storage.at(MR_KBDR) = std::getchar();
+    //         }
+    //         else {
+    //             memory_storage.at(MR_KBSR) = 0;
+    //         }    
+    //     }
+    // }
+
+    return memory_storage.at(address);
+
 }
 
 void mem_write(uint16_t address, uint16_t value)
 {
-
+    memory_storage[address] = value;
 }
 
 uint16_t sign_extend(uint16_t x, int bit_count)

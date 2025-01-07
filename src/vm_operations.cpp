@@ -157,7 +157,29 @@ void op_str(uint16_t instruction) {
 
 
 void op_trap(uint16_t instruction) {
+    register_storage[R_R7] = register_storage[R_PC];
 
+    switch (instruction & 0xFF)
+    {
+        case TRAP_GETC:
+            // @{TRAP GETC}
+            break;
+        case TRAP_OUT:
+            // @{TRAP OUT}
+            break;
+        case TRAP_PUTS:
+            // @{TRAP PUTS}
+            break;
+        case TRAP_IN:
+            // @{TRAP IN}
+            break;
+        case TRAP_PUTSP:
+            // @{TRAP PUTSP}
+            break;
+        case TRAP_HALT:
+            // @{TRAP HALT}
+            break;
+    }
 }
 
 void op_rti(uint16_t instruction) {

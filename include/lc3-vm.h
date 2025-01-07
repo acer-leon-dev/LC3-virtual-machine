@@ -7,14 +7,14 @@
 enum // Registers
 {
     // R0-R7: General Purpose Registers
-    R_R0 = 0,
-    R_R1 = 0,
-    R_R2 = 0,
-    R_R3 = 0,
-    R_R4 = 0,
-    R_R5 = 0,
-    R_R6 = 0,
-    R_R7 = 0,
+    R_R0 = 0b000,
+    R_R1 = 0b001,
+    R_R2 = 0b010,
+    R_R3 = 0b011,
+    R_R4 = 0b100,
+    R_R5 = 0b101,
+    R_R6 = 0b110,
+    R_R7 = 0b111,
     R_PC, // Program Counter (PC)
     R_COND, // Condition Code Register (CCR)
     R_COUNT
@@ -27,6 +27,13 @@ enum
     PC_START = 0x3000
 };
 
+// Memory Mapped Registers
+enum
+{
+    MR_KBSR = 0xFE00,   // keyboard status
+    MR_KBDR = 0xFE02    // keyboard data
+};
+
 enum // Condition flags
 {
     FL_POS = 1u << 0u, /* P */
@@ -36,34 +43,34 @@ enum // Condition flags
 
 enum // Opcodes
 {
-    OP_ADD  = 0b0001,   // add  */
-    OP_AND  = 0b0101,   // bitwise and */
-    OP_NOT  = 0b1001,   // bitwise not */
-    OP_BR   = 0b0000,   // branch */
-    OP_JMP  = 0b1100,   // jump */
+    OP_ADD  = 0b0001,   // add 
+    OP_AND  = 0b0101,   // bitwise and
+    OP_NOT  = 0b1001,   // bitwise not
+    OP_BR   = 0b0000,   // branch
+    OP_JMP  = 0b1100,   // jump
     // OP_RET = OP_JMP
-    OP_JSR  = 0b0100,   // jump register */
+    OP_JSR  = 0b0100,   // jump register
     // OP_JSRR = OP_JSR
-    OP_RTI  = 0b1000,   // unused */
-    OP_LD   = 0b0010,   // load */
-    OP_LDI  = 0b1010,   // load indirect */
-    OP_LDR  = 0b0110,   // load register */
-    OP_LEA  = 0b1110,   // load effective address */
-    OP_ST   = 0b0011,   // store */
-    OP_STI  = 0b1011,   // store indirect */
-    OP_STR  = 0b0111,   // store register */
-    OP_TRAP = 0b1111,   // execute trap */
-    OP_RES  = 0b1101    // reserved (unused) */
+    OP_RTI  = 0b1000,   // unused
+    OP_LD   = 0b0010,   // load
+    OP_LDI  = 0b1010,   // load indirect
+    OP_LDR  = 0b0110,   // load register
+    OP_LEA  = 0b1110,   // load effective address
+    OP_ST   = 0b0011,   // store
+    OP_STI  = 0b1011,   // store indirect
+    OP_STR  = 0b0111,   // store register
+    OP_TRAP = 0b1111,   // execute trap
+    OP_RES  = 0b1101    // reserved (unused)
 };
 
 enum // Trap codes
 {
-    TRAP_GETC = 0x30,  /* get character from keyboard, not echoed onto the terminal */
-    TRAP_OUT = 0x21,   /* output a character */
-    TRAP_PUTS = 0x22,  /* output a word string */
-    TRAP_IN = 0x23,    /* get character from keyboard, echoed onto the terminal */
-    TRAP_PUTSP = 0x24, /* output a byte string */
-    TRAP_HALT = 0x25   /* halt the program */
+    TRAP_GETC = 0x30,  // get character from keyboard, not echoed onto the terminal
+    TRAP_OUT = 0x21,   // output a character
+    TRAP_PUTS = 0x22,  // output a word string
+    TRAP_IN = 0x23,    // get character from keyboard, echoed onto the terminal
+    TRAP_PUTSP = 0x24, // output a byte string
+    TRAP_HALT = 0x25   // halt the program
 };
 
 inline const unsigned int MEMORY_MAX = 1 << 16;
@@ -120,7 +127,7 @@ uint16_t sign_extend(uint16_t x, int bit_count);
 /// Sets the value in `register_storage[R_COND]` based on the value in `register_storage[reg]`.
 /// Positive    -> FL_POS,
 /// Zero        -> FL_ZRO,
-/// Negative    -> FL_NEG,
+/// Negative    -> FL_NEG
 ///
 /// @param reg The register to get the value from. 
 ///

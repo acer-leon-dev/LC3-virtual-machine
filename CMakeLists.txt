@@ -11,6 +11,7 @@ set(SOURCES
     "src/vm.cpp"
     "src/vm_operations.cpp"
     "src/vm_base.cpp"
+    "src/vm_traps.cpp"
 )
 
 add_executable(lc3-vm ${SOURCES})
