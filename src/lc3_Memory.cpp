@@ -1,5 +1,5 @@
-#include "lc3_Memory.h"
-#include "lc3_LC3.h"
+#include "LC3VM/lc3_Memory.h"
+#include "LC3VM/lc3_LC3.h"
 
 
 namespace lc3 {
@@ -7,21 +7,21 @@ namespace lc3 {
 lc3_size_t Memory::read(lc3_size_t address) {
     switch (address) {
         case MR_KBSR: {
-            if (LC3::m_check_key()) {
-                internal.at(MR_KBSR) = (1 << 15);
-                internal.at(MR_KBDR) = std::getchar();
+            if (LC3::s_check_key()) {
+                m_internal.at(MR_KBSR) = (1 << 15);
+                m_internal.at(MR_KBDR) = std::getchar();
             }
             else {
-                internal.at(MR_KBSR) = 0;
+                m_internal.at(MR_KBSR) = 0;
             }    
         }
     }
 
-    return internal.at(address);
+    return m_internal.at(address);
 }
 
 void Memory::write(lc3_size_t address, lc3_size_t value) {
-        internal.at(address) = value;
+        m_internal.at(address) = value;
 }
 
 }

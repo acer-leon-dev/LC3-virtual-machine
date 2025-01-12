@@ -1,4 +1,4 @@
-#include "lc3.h"
+#include "LC3VM/lc3.h"
 
 #if defined(_WIN32)
  #include <windows.h>
@@ -13,11 +13,13 @@
  #include <sys/mman.h>
 #endif
 
-namespace {
+namespace
+{
 
-uint32_t getchar_no_echo() { 
+uint32_t getchar_no_echo()
+{ 
    #if defined(_WIN32)
-    char ch = getch(); 
+    return getch(); 
    #elif defined(__unix__)
     // POSIX - termios.h
     // Get the current terminal settings
@@ -34,60 +36,74 @@ uint32_t getchar_no_echo() {
 
     // Restore the original terminal settings
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-   #endif
+
     return ch;
+   #endif
 }
 
 }
 
-namespace lc3 {
 
-void LC3::m_trap_GETC() {
-    m_registers.set(R_R0, static_cast<uint16_t>(getchar_no_echo()));
-    m_update_flags(m_registers.get(R_R0));
+namespace lc3
+{
+
+void LC3::m_trap_GETC()
+{
+    m_registers.set(R_R0, getchar_no_echo());
+    m_registers.update_flags();
 }
 
-
-void LC3::m_trap_OUT() {
+void LC3::m_trap_OUT()
+{
     std::print("{}", static_cast<char>(m_registers.get(R_R0)));
     std::cout.flush();
 }
 
-
-void LC3::m_trap_PUTS() {
+void LC3::m_trap_PUTS()
+{
     lc3_size_t address = m_registers.get(R_R0);
-    for (lc3_size_t word = m_memory.read(address); word != 0x00; word = m_memory.read(++address)) {
-        std::print("{}", static_cast<char>(word));
+    char ch = m_memory.read(address);
+    for (; ch != '\0'; address++)
+    {
+        ch = m_memory.read(address);
+        std::print("{}", ch);
     }
     std::cout.flush();
 }
 
-
-void LC3::m_trap_IN() {
+void LC3::m_trap_IN()
+{
     std::print("Enter a character: ");
     char ch = std::getchar();
-    std::cout << std::flush;
+    std::cout.flush();
     m_registers.set(R_R0, static_cast<lc3_size_t>(ch));
-    m_update_flags(m_registers.get(R_R0));
+    m_registers.update_flags();
 }
 
-
-void LC3::m_trap_PUTSP() {
+void LC3::m_trap_PUTSP()
+{
     lc3_size_t address = m_registers.get(R_R0);
-    for (lc3_size_t word = m_memory.read(address); word != 0x0000; word = m_memory.read(++address)) {
-        std::print("{}", static_cast<char>(word & 0xFF));
-        if ((word >> 8) & 0xFF) {
-            std::print("{}", static_cast<char>((word >> 8)));
+    lc3_size_t word = m_memory.read(address);
+    for (; word != 0x0000; address++)
+    {
+        word = m_memory.read(address);
+
+        char ch1 = word & 0xFF;
+        std::print("{}", ch1);
+
+        char ch2 = (word >> 8);
+        if (ch2)
+        {
+            std::print("{}", ch2);
         }
     }
-    std::cout.flush();
 }
 
-
-void LC3::m_trap_HALT() {
+void LC3::m_trap_HALT()
+{
     std::println("\nHALT");
     std::cout.flush();
-    running = false;
+    m_running = false;
 }
 
 }

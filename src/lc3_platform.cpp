@@ -1,4 +1,4 @@
-#include "lc3.h"
+#include "LC3VM/lc3.h"
 
 #if defined(_WIN32)
  #include <windows.h>
@@ -22,7 +22,7 @@ namespace lc3 {
  termios original_tio;
 #endif
 
-void LC3::m_disable_input_buffering()
+void LC3::s_disable_input_buffering()
 {
   #if defined(_WIN32)
    hStdin = GetStdHandle(STD_INPUT_HANDLE);
@@ -42,7 +42,7 @@ void LC3::m_disable_input_buffering()
 
 }
 
-void LC3::m_restore_input_buffering()
+void LC3::s_restore_input_buffering()
 {
   #if defined(_WIN32)
    SetConsoleMode(hStdin, fdwOldMode);
@@ -51,7 +51,7 @@ void LC3::m_restore_input_buffering()
   #endif
 }
 
-bool LC3::m_check_key() {
+bool LC3::s_check_key() {
   #if defined(_WIN32)
    return WaitForSingleObject(hStdin, 1000) == WAIT_OBJECT_0 && _kbhit();
   #elif defined(__unix__)
@@ -66,9 +66,9 @@ bool LC3::m_check_key() {
   #endif
 }
 
-void LC3::m_handle_interrupt(int signal)
+void LC3::s_handle_interrupt(int signal)
 {
-   m_restore_input_buffering();
+   s_restore_input_buffering();
    std::println();
    std::exit(-2);
 }

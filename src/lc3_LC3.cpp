@@ -1,13 +1,13 @@
-#include "lc3.h"
+#include "LC3VM/lc3.h"
 #include <csignal>
 
 namespace lc3 
 {
 
 LC3::LC3()
-    : running(false)
+    : m_running(false)
 {
-    // Set condition register to zero by default
+    // Set condition register to ZERO by default
     m_registers.set(R_COND, FL_ZRO);
     // Set PC to x3000 by default
     m_registers.set(R_PC, PC_START);
@@ -15,13 +15,12 @@ LC3::LC3()
 
 LC3::~LC3() 
 {
-    m_restore_input_buffering();
 }
 
 void LC3::run() 
 {
-    std::signal(SIGINT, m_handle_interrupt);
-    m_disable_input_buffering();
+    std::signal(SIGINT, s_handle_interrupt);
+    s_disable_input_buffering();
 
     // Test 1 // // // // // // // // // // // // // // //
     // Create program
@@ -39,13 +38,13 @@ void LC3::run()
     // // // // // // // // // // // // // // // // // //
 
     std::println("Running...");
-    running = true;
-    while (running) 
+    m_running = true;
+    while (m_running) 
     {
         // Read the next instruction and retrieve its opcode
         lc3_size_t instr = m_memory.read(m_registers.get(R_PC));
         m_registers.inc(R_PC, 1);
-        lc3_size_t op = bit::get_arg(instr, bit::label::end, 12);
+        lc3_size_t op = bit::get_arg(instr, bit::label::msb, 12);
         
         // Test 
         // std::print("R_PC = {}, ", registers.at(R_PC));
@@ -74,6 +73,8 @@ void LC3::run()
             default:      m_op_ERROR(instr); break;
         }
     }
+
+    s_restore_input_buffering();
 }
 
 bool LC3::read_image(const std::string& path) 
@@ -98,34 +99,19 @@ bool LC3::read_image(const std::string& path)
     }
 
     // Copy program to memory
-    std::copy(buffer.begin(), buffer.end(), m_memory.internal.begin() + origin);
+    std::copy(buffer.begin(), buffer.end(), m_memory.m_internal.begin() + origin);
 
-    // Test
     // // Print program output
     // std::println("Loaded '{}':", path);
-    // for (auto line : buffer)
-    //     std::println("\t{0:016b}, {0:#06x}", line);
+    // auto begin = m_memory.m_internal.begin() + origin;
+    // auto end = begin + buffer.size();
+    // for (auto it = begin; it != end; it++)
+    // {
+    //     std::println("\t{0:016b} {0:#06x}", *it);
+    // }
+
     fobj.close();
     return true;
-}
-
-void LC3::m_update_flags(register_t reg) 
-{
-    if (m_registers.get(reg) == 0) 
-    {
-        m_registers.set(R_COND, FL_ZRO);
-    }
-    // a 1 in the left-most bit indicates negative
-    else if (m_registers.get(reg) >> 15)
-    
-    {
-        m_registers.set(R_COND, FL_NEG);
-    }
-    else
-    
-    {
-        m_registers.set(R_COND, FL_POS);
-    }
 }
 
 } // lc3

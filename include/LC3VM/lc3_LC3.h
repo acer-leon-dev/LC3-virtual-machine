@@ -1,9 +1,9 @@
 #ifndef EC04C2DD_3AC3_4AF2_BBB8_052F21CA2D14
 #define EC04C2DD_3AC3_4AF2_BBB8_052F21CA2D14
 
-#include "lc3_types.h"
-#include "lc3_Memory.h"
-#include "lc3_RegisterFile.h"
+#include "LC3VM/lc3_types.h"
+#include "LC3VM/lc3_Memory.h"
+#include "LC3VM/lc3_RegisterFile.h"
 
 namespace lc3
 {
@@ -29,26 +29,16 @@ public:
     /// @return True if the read was success; false if failed
     bool read_image(const std::string& path);
 private:
-    RegisterFile m_registers; // RegisterFile Storage
-    Memory m_memory; // 65536 locations
-    bool running;
-private:
     friend class Memory;
 private:
-    static void m_disable_input_buffering();
-    static void m_restore_input_buffering();
-    static bool m_check_key();
-    static void m_handle_interrupt(int signal);
-    
-    /// @brief Updates the condition register.
-    ///
-    /// Sets the value in `registers[R_COND]` based on the value in `registers[reg]`.
-    /// Positive    -> FL_POS,
-    /// Zero        -> FL_ZRO,
-    /// Negative    -> FL_NEG
-    ///
-    /// @param reg The register to get the value from. 
-    void m_update_flags(register_t reg);
+    RegisterFile m_registers; // RegisterFile Storage
+    Memory m_memory; // 65536 locations
+    bool m_running;
+private:
+    static void s_disable_input_buffering();
+    static void s_restore_input_buffering();
+    static bool s_check_key();
+    static void s_handle_interrupt(int signal);
 
     // Traps
     void m_trap_GETC();

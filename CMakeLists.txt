@@ -8,7 +8,7 @@ set(INCLUDEDIRS
     "include"
 )
 set(PRECOMPILEDHEADERS
-    "include/lc3_precompiled.h"
+    "include/LC3VM/lc3_precompiled.h"
 )
 set(SOURCES
     "src/vm.cpp"

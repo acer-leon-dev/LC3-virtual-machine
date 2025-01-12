@@ -1,23 +1,27 @@
 #ifndef C7476CD9_F8B1_4EBF_8E67_12D85842D54A
 #define C7476CD9_F8B1_4EBF_8E67_12D85842D54A
 
-#include "lc3_precompiled.h"
-#include "lc3_types.h"
+#include "LC3VM/lc3_precompiled.h"
+#include "LC3VM/lc3_types.h"
 
 namespace lc3
 {
 
 class RegisterFile
 {
-private:
+public:
     lc3_size_t get(register_t reg);
     void set(register_t reg, lc3_size_t val);
     void inc(register_t reg, lc3_size_t val);
     void dec(register_t reg, lc3_size_t val);
-private:
-    std::array<lc3_size_t, NUM_REGISTERS> internal;
+    void update_flags(register_t reg);
+    void update_flags();
 private:
     friend class LC3;
+private:
+    std::array<lc3_size_t, NUM_REGISTERS> m_internal;
+    register_t m_last_set;
+    void m_set_last_set(register_t reg);
 };
 
 }

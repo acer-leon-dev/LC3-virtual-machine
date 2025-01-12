@@ -1,14 +1,14 @@
 #ifndef B4287C87_D586_4153_841C_83F90DCA0FAB
 #define B4287C87_D586_4153_841C_83F90DCA0FAB
 
-#include "lc3_types.h"
+#include "LC3VM/lc3_types.h"
 
 
 namespace lc3::bit::label
 {
 
 typedef uint32_t bit_label;
-static constexpr bit_label end = -1;
+inline constexpr bit_label msb = -1;
     
 }
 
@@ -16,6 +16,8 @@ static constexpr bit_label end = -1;
 namespace lc3::bit {
 
 lc3_size_t get_arg(lc3_size_t instruction, uint32_t left, uint32_t right);
+
+lc3_size_t get_arg(lc3_size_t instruction, uint32_t bit);
 
 ///
 /// @brief Extends the given signed integer to 16 bits.

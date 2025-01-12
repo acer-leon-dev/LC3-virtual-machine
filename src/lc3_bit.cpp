@@ -1,4 +1,4 @@
-#include "lc3_bit.h"
+#include "LC3VM/lc3_bit.h"
 
 
 namespace lc3::bit {
@@ -19,14 +19,9 @@ lc3_size_t sext(lc3_size_t x, uint32_t bit_count)
 
 lc3_size_t get_arg(lc3_size_t instruction, uint32_t left, uint32_t right)
 {
-    if (left == label::end)
+    if (left == label::msb)
     {
         left = sizeof(lc3_size_t) * 8 - 1;
-    }
-
-    if (right == label::end)
-    {
-        right = 0;
     }
 
     if (left < right)
@@ -35,8 +30,13 @@ lc3_size_t get_arg(lc3_size_t instruction, uint32_t left, uint32_t right)
     }
 
     lc3_size_t arg = instruction >> right;
-    arg &= static_cast<uint32_t>(std::pow(2, left - right + 1) - 1);
+    arg &= (1 << (left - right + 1)) - 1;
     return arg;
+}
+
+lc3_size_t get_arg(lc3_size_t instruction, uint32_t bit)
+{
+    return get_arg(instruction, bit, bit);
 }
 
 }

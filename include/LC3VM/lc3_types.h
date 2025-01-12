@@ -1,7 +1,7 @@
 #ifndef D814E86E_6F32_4D61_B970_E93757D187C4
 #define D814E86E_6F32_4D61_B970_E93757D187C4
 
-#include "lc3_precompiled.h"
+#include "LC3VM/lc3_precompiled.h"
 
 
 namespace lc3 {
@@ -12,7 +12,7 @@ inline constexpr uint32_t PC_START = 0x3000;
 inline constexpr uint32_t MEMORY_MAX = 1 << 16;
 inline constexpr uint32_t NUM_REGISTERS = 10;
 
-enum /* RegisterFiles */ {
+enum /* Registers */ {
     // R0-R7: General Purpose lc3_size_ts
     R_R0        = 0,
     R_R1        = 1,
@@ -27,9 +27,9 @@ enum /* RegisterFiles */ {
 };
 
 enum /* Condition Flags */ {
-    FL_POS      = 1 << 0, /* P */
-    FL_ZRO      = 1 << 1, /* Z */
-    FL_NEG      = 1 << 2, /* N */
+    FL_POS      = 0b001, // Positive
+    FL_ZRO      = 0b010, // Zero
+    FL_NEG      = 0b100, // Negative
 };
 
 enum /* Opcodes */ { 
@@ -60,7 +60,7 @@ enum /* Trap codes */ {
     TRAP_HALT   = 0x25   // halt the program
 };
 
-enum /* Memory Mapped registers */ {
+enum /* Memory Mapped Registers */ {
     MR_KBSR     = 0xFE00,   // keyboard status
     MR_KBDR     = 0xFE02    // keyboard data
 };
