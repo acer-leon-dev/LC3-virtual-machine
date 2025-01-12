@@ -314,7 +314,7 @@ void LC3::m_op_TRAP(lc3_size_t instruction)
 void LC3::m_op_RTI(lc3_size_t instruction)
 {
     std::println(stderr, "'RTI' ({:04b}) is not a valid opcode.", static_cast<int>(OP_RTI));
-    std::println(stderr, "\tnote: 'RTI' ({:04b}) is not in use.", static_cast<int>(OP_RTI));
+    std::println(stderr, "\tnote: 'RTI' ({:04b}) is not in use. Do not use this operation in source code.", static_cast<int>(OP_RTI));
     std::abort();
 }
 
@@ -326,7 +326,7 @@ void LC3::m_op_RTI(lc3_size_t instruction)
 void LC3::m_op_RES(lc3_size_t instruction)
 {
     std::println(stderr, "'reserved' ({:04b}) is not a valid opcode.", static_cast<int>(OP_RES));
-    std::println(stderr, "\tnote: 'reserved' ({:04b}) is not in use.", static_cast<int>(OP_RES));
+    std::println(stderr, "\tnote: 'reserved' ({:04b}) is not in use. Do not use this operation in source code.", static_cast<int>(OP_RES));
     std::abort();
 }
 
