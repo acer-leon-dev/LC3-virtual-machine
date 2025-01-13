@@ -1,8 +1,8 @@
 #ifndef C7476CD9_F8B1_4EBF_8E67_12D85842D54A
 #define C7476CD9_F8B1_4EBF_8E67_12D85842D54A
 
-#include "LC3VM/lc3_precompiled.h"
-#include "LC3VM/lc3_types.h"
+#include "LC3VM/Precompiled.h"
+#include "LC3VM/Types.h"
 
 namespace lc3
 {
@@ -19,7 +19,7 @@ public:
 private:
     friend class LC3;
 private:
-    std::array<lc3_size_t, NUM_REGISTERS> m_internal;
+    std::array<lc3_size_t, NUm_reg> m_internal;
     register_t m_last_set;
     void m_set_last_set(register_t reg);
 };

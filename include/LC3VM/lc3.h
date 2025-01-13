@@ -3,10 +3,10 @@
 #ifndef CEA2B1AD_D5DF_4FA4_A6B6_A8DB597E7DF0
 #define CEA2B1AD_D5DF_4FA4_A6B6_A8DB597E7DF0
 
-#include "LC3VM/lc3_bit.h"
-#include "LC3VM/lc3_LC3.h"
-#include "LC3VM/lc3_precompiled.h"
-#include "LC3VM/lc3_types.h"
+#include "LC3VM/Bit.h"
+#include "LC3VM/VM.h"
+#include "LC3VM/Precompiled.h"
+#include "LC3VM/Types.h"
 
 #endif /* CEA2B1AD_D5DF_4FA4_A6B6_A8DB597E7DF0 */
 

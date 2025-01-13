@@ -1,5 +1,5 @@
-#include "LC3VM/lc3_Memory.h"
-#include "LC3VM/lc3_LC3.h"
+#include "LC3VM/Memory.h"
+#include "LC3VM/VM.h"
 
 
 namespace lc3 {

@@ -1,4 +1,4 @@
-#include "LC3VM/lc3.h"
+#include "LC3VM/LC3.h"
 
 int main(int argc, char** argv) {
     if (argc < 2) {

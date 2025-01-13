@@ -1,4 +1,4 @@
-#include "LC3VM/lc3.h"
+#include "LC3VM/LC3.h"
 
 #if defined(_WIN32)
  #include <windows.h>

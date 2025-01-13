@@ -1,21 +1,18 @@
 #ifndef B4287C87_D586_4153_841C_83F90DCA0FAB
 #define B4287C87_D586_4153_841C_83F90DCA0FAB
 
-#include "LC3VM/lc3_types.h"
-
-
-namespace lc3::bit::label
-{
-
-typedef uint32_t bit_label;
-inline constexpr bit_label msb = -1;
-    
-}
+#include "LC3VM/Types.h"
 
 
 namespace lc3::bit {
 
-lc3_size_t get_arg(lc3_size_t instruction, uint32_t left, uint32_t right);
+struct label
+{
+    typedef uint32_t bit_label;
+    static inline constexpr bit_label msb = -1;
+};
+
+lc3_size_t cut(lc3_size_t instruction, uint32_t left, uint32_t right);
 
 lc3_size_t get_arg(lc3_size_t instruction, uint32_t bit);
 

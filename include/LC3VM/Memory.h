@@ -1,8 +1,8 @@
 #ifndef DC137FD0_EFCC_45E9_B07B_755FB8666238
 #define DC137FD0_EFCC_45E9_B07B_755FB8666238
 
-#include "LC3VM/lc3_precompiled.h"
-#include "LC3VM/lc3_types.h"
+#include "LC3VM/Precompiled.h"
+#include "LC3VM/Types.h"
 
 namespace lc3
 {

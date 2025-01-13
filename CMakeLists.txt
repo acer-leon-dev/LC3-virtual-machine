@@ -8,17 +8,17 @@ set(INCLUDEDIRS
     "include"
 )
 set(PRECOMPILEDHEADERS
-    "include/LC3VM/lc3_precompiled.h"
+    "include/LC3VM/Precompiled.h"
 )
 set(SOURCES
     "src/vm.cpp"
-    "src/lc3_bit.cpp"
-    "src/lc3_LC3.cpp"
-    "src/lc3_Memory.cpp"
-    "src/lc3_operations.cpp"
-    "src/lc3_platform.cpp"
-    "src/lc3_RegisterFile.cpp"
-    "src/lc3_traps.cpp"
+    "src/Bit.cpp"
+    "src/LC3.cpp"
+    "src/Memory.cpp"
+    "src/Operations.cpp"
+    "src/Platform.cpp"
+    "src/RegisterFile.cpp"
+    "src/Traps.cpp"
 )
 
 add_executable(lc3_vm ${SOURCES})
